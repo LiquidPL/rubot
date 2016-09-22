@@ -128,6 +128,9 @@ post '/webhook' do
   repo_name = payload['repository']['full_name']
 
   channels = $links[repo_name]
+
+  return halt 404, 'Unknown repo' unless channels
+
   channels.each do |e|
     response = handle(event_type, payload)
     if response
